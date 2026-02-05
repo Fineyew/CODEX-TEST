@@ -1,0 +1,37 @@
+version: "3.8"
+services:
+  mongo:
+    image: mongo:6
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+  lavalink:
+    image: fredboat/lavalink:3.8.5
+    environment:
+      - LAVALINK_PASSWORD=${LAVALINK_PASSWORD:-youshallnotpass}
+      - LAVALINK_PORT=2333
+    ports:
+      - "2333:2333"
+  bot:
+    build: .
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - MONGO_URI=mongodb://mongo:27017/dynobot
+      - REDIS_URI=redis://redis:6379
+      - LAVALINK_HOST=lavalink
+      - LAVALINK_PORT=2333
+      - LAVALINK_PASSWORD=${LAVALINK_PASSWORD:-youshallnotpass}
+    depends_on:
+      - mongo
+      - redis
+      - lavalink
+    volumes:
+      - ./:/app
+    # use this for dev convenience
+    command: npm run dev
+volumes:
+  mongo-data:

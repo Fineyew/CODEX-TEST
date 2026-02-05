@@ -1,0 +1,8 @@
+{
+  "moderation.banned": "Baneado {user} — {reason}",
+  "moderation.kicked": "Expulsado {user} — {reason}",
+  "moderation.timed_out": "Silenciado {user} por {duration} — {reason}",
+  "general.no_permission": "No tienes permiso para ejecutar este comando.",
+  "music.queue.added": "En cola: {title}",
+  "music.now_playing": "Reproduciendo ahora: {title} — pedido por {requester}"
+}
